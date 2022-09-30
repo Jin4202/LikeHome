@@ -1,0 +1,10 @@
+@keyframes run {
+  0% {left:0%;}
+  100% {left:-100%;}
+}
+
+#animate{
+  width: 200%;
+  animation: run 10s linear infinite;
+
+}
