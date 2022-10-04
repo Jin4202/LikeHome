@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import SignupContext from "../Context/SignupContext";
+import { UserContext } from "../Context/userContext";
 
 import {
   createUserDocumentFromAuth,
@@ -10,6 +11,8 @@ import {
 
 function Login() {
   const { setSignup, setForgotpass } = useContext(SignupContext);
+  const { setCurrentUser } = useContext(UserContext);
+
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [Required, setRequired] = useState({
@@ -36,16 +39,14 @@ function Login() {
   const ResetPassWordForm = () => {
     setForgotpass(true);
   };
-console.log(pwd);
+  console.log(pwd);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
-        email,
-        pwd
-      );
-      console.log(response);
+      const {user} = await signInAuthUserWithEmailAndPassword(email, pwd);
+      setCurrentUser(user);
+      console.log(user);
       setEmail("");
       setPwd("");
     } catch (error) {

@@ -3,6 +3,8 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ContactPhoneOutlinedIcon from "@mui/icons-material/ContactPhoneOutlined";
 import SignupContext from "../Context/SignupContext";
+import { UserContext } from "../Context/userContext";
+
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -15,6 +17,7 @@ function Signup() {
     passWordRequired: false,
   });
   let copyRequire = { ...Required };
+  const { setCurrentUser } = useContext(UserContext);
 
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
@@ -36,7 +39,6 @@ function Signup() {
       ...copyRequire,
     }));
   };
-  console.log(object);
   const LoginForm = () => {
     setSignup(false);
   };
@@ -50,14 +52,9 @@ function Signup() {
     try {
       const { user } = await createAuthUserWithEmailAndPassword(email, pwd);
 
-      const res = await createUserDocumentFromAuth(user, {
-        email,
-        phone,
-        firstname,
-        lastname,
-        pwd,
-        matchPwd,
-      });
+      const res = await createUserDocumentFromAuth(user, object);
+      console.log(res);
+      setCurrentUser(user);
 
       setFirstName("");
       setLastName("");

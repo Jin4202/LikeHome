@@ -14,7 +14,7 @@ import {
   query,
   where,
   onSnapshot,
-  getDocs,
+  getDoc,
   doc,
   setDoc,
 } from "firebase/firestore";
@@ -56,7 +56,7 @@ export const createUserDocumentFromAuth = async (
     const createdAt = new Date();
 
     try {
-      s;
+
       await setDoc(userDocRef, {
         email,
         createdAt,
@@ -81,6 +81,9 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 
   return await signInWithEmailAndPassword(auth, email, password);
 };
+
+export const signOutUser = async () => await signOut(auth);
+
 // useEffect(() => {
 //   (async () => {
 //       const colRef = collection(db, 'destinations')
