@@ -1,14 +1,16 @@
-import '../styles/globals.css'
-
+import "../styles/globals.css";
+import { UserProvider } from "../components/Context/userContext";
 function MyApp({ Component, pageProps }) {
-  const getLayout = Component.getLayout || ((page) => page)
+  const getLayout = Component.getLayout || ((page) => page);
   return (
-    <div className=''>
-        {getLayout(<Component {...pageProps} />)}
+    <div className="">
+      {getLayout(
+        <UserProvider>
+          <Component {...pageProps} />
+        </UserProvider>
+      )}
     </div>
-
-  )
-
+  );
 }
 
-export default MyApp
+export default MyApp;
