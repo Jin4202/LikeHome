@@ -3,10 +3,10 @@ import { initializeApp } from "firebase/app";
 
 import {
   getAuth,
-  signInWithRedirect,
-  signInWithPopup,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -18,7 +18,6 @@ import {
   doc,
   setDoc,
 } from "firebase/firestore";
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyA3Ai4CR3Rxim8hYpP2P-g5E_6Nc9cGEOE",
@@ -46,17 +45,13 @@ export const createUserDocumentFromAuth = async (
   additionalInformation = {}
 ) => {
   if (!userAuth) return;
-
   const userDocRef = doc(db, "users", userAuth.uid);
-
-  const userSnapshot = await getDoc(userDocRef);
-
+  const userSnapshot = await getDoc(doc(db, "users", userAuth.uid));
   if (!userSnapshot.exists()) {
     const { email } = userAuth;
     const createdAt = new Date();
 
     try {
-
       await setDoc(userDocRef, {
         email,
         createdAt,
@@ -84,6 +79,20 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 
 export const signOutUser = async () => await signOut(auth);
 
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);
+
+export const getDataUser = async (userAuth) => {
+  try {
+    const userSnapshot = await getDoc(
+      doc(db, "users", userAuth.uid)
+    );
+    console.log(userSnapshot.data());
+    return userSnapshot.data();
+  } catch (error) {
+    console.log(error);
+  }
+};
 // useEffect(() => {
 //   (async () => {
 //       const colRef = collection(db, 'destinations')

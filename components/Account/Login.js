@@ -3,16 +3,13 @@ import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import SignupContext from "../Context/SignupContext";
 import { UserContext } from "../Context/userContext";
-
-import {
-  createUserDocumentFromAuth,
-  signInAuthUserWithEmailAndPassword,
-} from "../../firebaseConfig.js";
+import { useRouter } from "next/router";
+import { signInAuthUserWithEmailAndPassword,getDataUser } from "../../firebaseConfig.js";
 
 function Login() {
+  const router = useRouter();
   const { setSignup, setForgotpass } = useContext(SignupContext);
   const { setCurrentUser } = useContext(UserContext);
-
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [Required, setRequired] = useState({
@@ -45,10 +42,13 @@ function Login() {
 
     try {
       const {user} = await signInAuthUserWithEmailAndPassword(email, pwd);
+      const res = getDataUser(user);
+      console.log(res);
       setCurrentUser(user);
       console.log(user);
       setEmail("");
       setPwd("");
+      router.push("/");
     } catch (error) {
       switch (error.code) {
         case "auth/wrong-password":
