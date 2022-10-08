@@ -101,7 +101,7 @@ function index() {
   const fb_collection = 'cities';
   useEffect(() => {
     targetCities.forEach((city) => {
-      store_data(city, input_country, key, fb_collection);
+      //store_data(city, input_country, key, fb_collection);
       console.log("Completed.");
     });
   });
