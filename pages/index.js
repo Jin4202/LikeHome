@@ -37,6 +37,14 @@ function index() {
     return res.then(response => response.json());
   };
 
+  const parse_searchDestination_data = (data) => {
+    let dataset = new Map();
+    for (let destination of data.data) {
+      dataset.set(destination.display_name, destination);
+    }
+    return dataset;
+  };
+
   /*
     We don't want to use this function every time we run the project. You spend requests from RapidAPI.
     Parameters examples
@@ -83,9 +91,14 @@ function index() {
   const store_data = async (cityName, input_country, key, fb_collection) => {
       let input_city = formattedCityName(cityName);
       let data = await searchHotelsAt(input_city, input_country, key);
-      let fb_document = cityName;
-      await storeData(fb_collection, fb_document, data);
+      let dataset = parse_searchDestination_data(data);
+      let keys = dataset.keys();
+      for(let destination_name of keys) {
+        await storeData(fb_collection, destination_name, dataset.get(destination_name));
+      }
   };
+
+
 
   // Usage
   /* Require
@@ -97,12 +110,12 @@ function index() {
   //const targetCities = ['Adirondacks', 'Manhattan', 'Black Hills', 'Chicago', 'Rocks National Lakeshore'];
   const targetCities = ['Adirondacks'];
   const input_country = 'USA';
-  const key = 'f789fcc07dmsh128cba791fdf78dp199409jsn1425b7896a3c';
-  const fb_collection = 'cities';
+  const key = '';
+  const fb_collection = 'destinations';
   useEffect(() => {
-    targetCities.forEach((city) => {
+    for (let city of targetCities) {
       //store_data(city, input_country, key, fb_collection);
-    });
+    }
   });
 
   return (
