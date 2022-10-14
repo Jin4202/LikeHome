@@ -11,6 +11,7 @@ import { Provider } from 'react-redux'
 import React, { useState, useEffect } from 'react'
 import db from '../firebaseConfig'
 import { doc, setDoc } from "firebase/firestore"
+import { collection, getDocs } from "firebase/firestore"
 
 function index() {
 
@@ -65,7 +66,7 @@ function index() {
     };
     let res = fetch(fetch_address, options);
     return res.then(response => response.json());
-  }
+  };
 
   /*
     Add a document. (https://firebase.google.com/docs/firestore/manage-data/add-data)
@@ -88,17 +89,43 @@ function index() {
     input_country: string, country name
     key: X-RapidAPI-Key
   */
-  const store_data = async (cityName, input_country, key, fb_collection) => {
-      let input_city = formattedCityName(cityName);
-      let data = await searchHotelsAt(input_city, input_country, key);
-      let dataset = parse_searchDestination_data(data);
-      let keys = dataset.keys();
-      for(let destination_name of keys) {
-        await storeData(fb_collection, destination_name, dataset.get(destination_name));
-      }
+  const store_destination_data = async (cityName, input_country, key, fb_collection) => {
+    let input_city = formattedCityName(cityName);
+    let data = await searchHotelsAt(input_city, input_country, key);
+    let dataset = parse_searchDestination_data(data);
+    let keys = dataset.keys();
+    for(let destination_name of keys) {
+      await storeData(fb_collection, destination_name, dataset.get(destination_name));
+    }
   };
 
 
+  const get_id = async (collection_name) => {
+    let id_set = [];
+    const querySnapshot = await getDocs(collection(db, collection_name));
+    querySnapshot.forEach((doc) => {
+      id_set.push([doc.data().id, doc.data().display_name]);
+    });
+    return id_set;
+  };
+  
+  const store_hotel_data = async (fb_dst_collection, key, fb_hotel_collection) => {
+    //placeholders
+    let id_array = await get_id(fb_dst_collection);
+    let id = id_array[3][0];
+    let displayName = id_array[3][1];
+
+    let data = await searchHotelProperties(id, displayName, key);
+    await storeData(fb_hotel_collection, id, data);
+    /*
+    for (let ids of id_array) {
+      let id = ids[0];
+      let displayName = ids[1];
+      console.log(id, displayName);
+      let data = await searchHotelProperties(id, displayName, key);
+      //await storeData(fb_hotel_collection, id, data);
+    }*/
+  };
 
   // Usage
   /* Require
@@ -108,16 +135,15 @@ function index() {
     key: X-RapidAPI-Key
   */
   //const targetCities = ['Adirondacks', 'Manhattan', 'Black Hills', 'Chicago', 'Rocks National Lakeshore'];
-  const targetCities = ['Adirondacks'];
+  const city = 'Adirondacks';
   const input_country = 'USA';
   const key = '';
-  const fb_collection = 'destinations';
+  const fb_dst_collection = 'destinations';
+  const fb_hotel_collection = 'hotelByDestination';
   useEffect(() => {
-    for (let city of targetCities) {
-      //store_data(city, input_country, key, fb_collection);
-    }
+    //store_destination_data(city, input_country, key, fb_dst_collection);
+    //store_hotel_data(fb_dst_collection, key, fb_hotel_collection);
   });
-
   return (
     <div className='md:overflow-visible'>
       <Provider store={store} >
