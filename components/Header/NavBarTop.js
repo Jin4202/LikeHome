@@ -39,21 +39,18 @@ function NavBarTop() {
             <p className="hover:scale-125">CONTACT</p>
           </button>
         </div>
-        <div className="flex justify-center sm:hidden md:flex">
-          {currentUser ? (
-            <button
-              className="flex flex-col justify-center align-center px-4 text-center"
-              onClick={signOutUser}
-            >
-              <p className="hover:scale-125">Logout</p>
-            </button>
-          ) : (
-            <button className="flex justify-center items-center align-center hover:scale-125 sm:overflow-hidden lg:overflow-visible">
+        <div className="flex flex-row justify-center align-center sm:hidden md:flex">
+          <button className="flex justify-center items-center align-center hover:scale-125 sm:overflow-hidden lg:overflow-visible">
+            {currentUser ? (
+              <Link href="/profile">
+                <AccountCircleOutlined />
+              </Link>
+            ) : (
               <Link href="/account">
                 <AccountCircleOutlined />
               </Link>
-            </button>
-          )}
+            )}
+          </button>
         </div>
       </div>
     </div>
