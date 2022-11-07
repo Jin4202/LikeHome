@@ -19,3 +19,34 @@ background: linear-gradient(0deg, rgba(199,197,231,1) 0%, rgba(206,253,255,0.304
     color: white;
     letter-spacing: .1rem;
 }
+
+.thumb-item {
+    width: auto;
+    position: relative;
+  }
+
+.thumb-item__info {
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    width: 75%;
+    opacity: 0;
+    color: whitesmoke;
+    padding: 10px 20px;
+}
+.thumb-item__info h5 {
+    font-size: 40px;
+    margin: 0;
+    padding: 0;
+}
+.thumb-item__info p {
+    font-size: 12px;
+    margin: 4px 0 14px;
+}
+.thumb-item:hover .thumb-item__info {
+    position: absolute;
+    opacity: 1;
+    bottom: 20px;
+    background-color: teal;
+    border-bottom-right-radius: 45%;
+}

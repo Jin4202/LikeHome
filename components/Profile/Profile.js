@@ -15,7 +15,7 @@ function Profile() {
                     <p className="hover:scale-125">Profile</p>
                 </button>
                 <button className="flex flex-col justify-center align-center text-white px-4 text-center">
-                    <p className="hover:scale-125">Reservations</p>
+                    <p className="hover:scale-125"> <Link href="./reservations/"><a> Reservations </a></Link></p>
                 </button>
                 <button className="flex flex-col justify-center align-center text-white px-4 text-center">
                     <p className="hover:scale-125">Payment</p>
