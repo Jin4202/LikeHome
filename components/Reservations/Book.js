@@ -4,10 +4,8 @@ import Link from "next/link";
 import { getDataUser, signOutUser } from '../../firebaseConfig'
 import Signup from '../Account/Signup';
 
-function Book () {
-
-
-     
+function Book (props) {
+    console.log(props)
     return (
         <div className='flex flex-col h-[auto] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-10'>
             <span className='text-center text-white pt-5 pb-8 pl-16 font-bold tracking-widest text-[30px]'>BOOK</span>

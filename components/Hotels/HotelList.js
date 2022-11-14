@@ -12,6 +12,7 @@ import ApartmentTwoToneIcon from '@mui/icons-material/ApartmentTwoTone';
 import HouseTwoToneIcon from '@mui/icons-material/HouseTwoTone';
 import AttachMoneyTwoToneIcon from '@mui/icons-material/AttachMoneyTwoTone';
 import StarRateTwoToneIcon from '@mui/icons-material/StarRateTwoTone';
+import Book from '../Reservations/Book';
 function HotelList(props) {
     const [data, setData] = useState([]);
     const [filterPrice, setFilterPrice] = useState('Price')
@@ -169,7 +170,7 @@ function HotelList(props) {
                 <div className='w-3/4 mx-auto mt-[100px] justify-center'>
                     <div className='grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 xxl:grid-cols-4 overflow-hidden'>
                         {
-                            data.map((getData) => <div className='flex mx-auto md:h-[400px] md:w-[300px] sm:h-[400px] sm:w-[250px] mb-5' key={getData.id}><PropertyCard key={getData.id} keyVal={getData} /> </div>)
+                            data.map((getData) => <div className='flex mx-auto md:h-[400px] md:w-[300px] sm:h-[400px] sm:w-[250px] mb-5' key={getData.id}><PropertyCard key={getData.id} keyVal={getData} />                             </div>)
                         }
                     </div>
                 </div>

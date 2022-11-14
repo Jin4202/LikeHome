@@ -9,7 +9,7 @@ import { signInAuthUserWithEmailAndPassword,getDataUser } from "../../firebaseCo
 function Login() {
   const router = useRouter();
   const { setSignup, setForgotpass } = useContext(SignupContext);
-  const { setCurrentUser } = useContext(UserContext);
+  const { currentUser,setCurrentUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [Required, setRequired] = useState({
@@ -36,16 +36,13 @@ function Login() {
   const ResetPassWordForm = () => {
     setForgotpass(true);
   };
-  console.log(pwd);
   const handleSubmit = async (event) => {
     event.preventDefault();
-
     try {
       const {user} = await signInAuthUserWithEmailAndPassword(email, pwd);
-      const res = getDataUser(user);
+      const res = await getDataUser(user);
       console.log(res);
-      setCurrentUser(user);
-      console.log(user);
+      setCurrentUser(res);
       setEmail("");
       setPwd("");
       router.push("/");

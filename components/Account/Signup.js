@@ -4,6 +4,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ContactPhoneOutlinedIcon from "@mui/icons-material/ContactPhoneOutlined";
 import SignupContext from "../Context/SignupContext";
 import { UserContext } from "../Context/userContext";
+import { signInAuthUserWithEmailAndPassword,getDataUser } from "../../firebaseConfig.js";
 
 import {
   createAuthUserWithEmailAndPassword,
