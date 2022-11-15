@@ -1,14 +1,20 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import Link from "next/link";
-import { getDataUser, signOutUser } from '../../firebaseConfig'
+import {  signOutUser } from '../../firebaseConfig'
 import { UserContext } from '../Context/userContext'
+import { Password } from '@mui/icons-material';
 
 function Profile() {
-    const { currentUser } = useContext(UserContext);
+    const { currentUser,setCurrentUser } = useContext(UserContext);
 
+    const signOutHandler = async () => {
+        await signOutUser();
+        setCurrentUser(null);
+       
+      };
     return (
         <div className='flex flex-col h-[700px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-10'>
-            <span className='text-white pt-5 pb-8 pl-16 font-bold tracking-widest text-[30px]'>Welcome back, [name]!</span>
+            <span className='text-white pt-5 pb-8 pl-16 font-bold tracking-widest text-[30px]'>Welcome back, {currentUser.lastname} {currentUser.firstname}!</span>
             <hr></hr>
             <div className="flex flex-row justify-center align-center p-4 text-[20px]">
                 <button className="flex flex-col justify-center align-center text-white px-4 text-center">
@@ -21,7 +27,7 @@ function Profile() {
                     <p className="hover:scale-125">Payment</p>
                 </button>
                 <button className="flex flex-col justify-center align-center text-white px-4 text-center"
-                    onClick={signOutUser}>
+                    onClick={signOutHandler}>
                     <Link href="/">
                         <p className="hover:scale-125">Log Out</p>
                     </Link>
@@ -43,11 +49,11 @@ function Profile() {
                     <span className='text-white pl-20 font-bold tracking-widest text-[16px] p-4'>Password</span>
                 </div>
                 <div className="flex flex-col justify-left align-center p-7">
-                    <span className='text-white pl-20 font-bold tracking-widest text-[16px] p-4'>[first name]</span>
-                    <span className='text-white pl-20 font-bold tracking-widest text-[16px] p-4'>[last name]</span>
-                    <span className='text-white pl-20 font-bold tracking-widest text-[16px] p-4'>[phone number]</span>
-                    <span className='text-white pl-20 font-bold tracking-widest text-[16px] p-4'>[email]</span>
-                    <span className='text-white pl-20 font-bold tracking-widest text-[16px] p-4'>[password]</span>
+                    <span className='text-white pl-20 font-bold tracking-widest text-[16px] p-4'>{currentUser.firstname}</span>
+                    <span className='text-white pl-20 font-bold tracking-widest text-[16px] p-4'>{currentUser.lastname}</span>
+                    <span className='text-white pl-20 font-bold tracking-widest text-[16px] p-4'>{currentUser.phone}</span>
+                    <span className='text-white pl-20 font-bold tracking-widest text-[16px] p-4'>{currentUser.email}</span>
+                    <span className='text-white pl-20 font-bold tracking-widest text-[16px] p-4'>{currentUser.pwd}</span>
                 </div>
             </div>
         </div>

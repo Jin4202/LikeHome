@@ -1,17 +1,12 @@
-import React, { useState } from 'react'
-import Layout from '../../components/Layout/Layout'
-import Book from '../../components/Reservations/Book'
-
-
+import React, { useState } from "react";
+import Layout from "../../components/Layout/Layout";
+import Book from "../../components/Reservations/Book";
 
 function booking() {
-
-    return (
-        
-            <Layout>
-             <Book/>
-            </Layout>
-        
-    )
+  return (
+    <Layout>
+      <Book />
+    </Layout>
+  );
 }
-export default booking
+export default booking;

@@ -12,7 +12,7 @@ function Account() {
         <div className='relative mx-auto'>
             <SignupContext.Provider value={{ signUp, setSignup, setForgotpass}}>
                 {
-                    (!forgotPass) ? ((signUp) ? <Signup/> : <Login/>) : <ForgotPassword/>
+                    (!forgotPass) ? ((signUp) ? <Signup /> : <Login />) : <ForgotPassword />
                     
                 }
             </SignupContext.Provider>
