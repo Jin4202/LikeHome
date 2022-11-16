@@ -17,7 +17,7 @@ function PropertyCard(props) {
     if(currentUser) {
       setCurrentHotel(props.keyVal);
       console.log(currentHotel);
-      router.push('../reservations/booking')
+      router.push( `../booking/${props.keyVal.id}`)
     } else {
       router.push('../account')
     }

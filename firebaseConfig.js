@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import React, { useContext, useState, useEffect } from "react";
 
 import {
   getAuth,
@@ -17,6 +18,7 @@ import {
   getDoc,
   doc,
   setDoc,
+  getDocs,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -39,6 +41,21 @@ export const getPropertyByDestinations = (destination) =>
   });
 
 export const auth = getAuth(app);
+
+export const getHotel = async (id) => {
+  if (!id) return;
+  const querySnapshot = await getDocs(collection(db, "hotelByDestination"));
+  const result = {};
+  querySnapshot.forEach((doc) => {
+    var hotel = doc.data().data.find((hotels) => hotels.id == id);
+    if (hotel) {
+      result = hotel;
+    }
+  });
+  return result;
+};
+
+
 
 export const createUserDocumentFromAuth = async (
   userAuth,
@@ -84,9 +101,7 @@ export const onAuthStateChangedListener = (callback) =>
 
 export const getDataUser = async (userAuth) => {
   try {
-    const userSnapshot = await getDoc(
-      doc(db, "users", userAuth.uid)
-    );
+    const userSnapshot = await getDoc(doc(db, "users", userAuth.uid));
     console.log(userSnapshot.data());
     return userSnapshot.data();
   } catch (error) {

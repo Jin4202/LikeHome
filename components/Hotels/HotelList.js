@@ -1,5 +1,4 @@
 import { query } from "firebase/firestore";
-import { useRouter } from "next/router";
 import { doc, setDoc } from "firebase/firestore";
 import { useDocument } from "react-firebase-hooks/firestore";
 import db from "../../firebaseConfig";
@@ -15,9 +14,12 @@ import StarRateTwoToneIcon from "@mui/icons-material/StarRateTwoTone";
 import Book from "../Reservations/Book";
 import { UserContext } from "../Context/userContext";
 import Link from "next/link";
+import { useRouter } from 'next/router'
 
 function HotelList(props) {
   const { currentUser, setCurrentUser } = useContext(UserContext);
+  const router = useRouter()
+
 
   
   const [data, setData] = useState([]);
@@ -29,6 +31,8 @@ function HotelList(props) {
       snapshotListenOptions: { includeMetadataChanges: true },
     }
   );
+
+  
   useEffect(() => {
     if (loading) {
       console.log("loading....");
