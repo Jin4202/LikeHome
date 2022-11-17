@@ -19,12 +19,13 @@ import Link from "next/link";
 function HotelList(props) {
   const { currentUser, setCurrentUser } = useContext(UserContext);
 
-  
+
   const [data, setData] = useState([]);
   const [filterPrice, setFilterPrice] = useState("Price");
   const [filter, setFilter] = useState([""]);
   const [value, loading, error] = useDocument(
-    doc(db, "hotelByDestination", props.condition),
+    //"hotelByDestination" / "hotels"
+    doc(db, "hotels", props.condition),
     {
       snapshotListenOptions: { includeMetadataChanges: true },
     }
@@ -34,7 +35,8 @@ function HotelList(props) {
       console.log("loading....");
     } else {
       // setData(value.data().data)
-      filterType(value.data().data);
+      //filterType(value.data().data);
+      filterType(value.data().listHotels);
     }
   }, [loading, filter, filterPrice]);
 
