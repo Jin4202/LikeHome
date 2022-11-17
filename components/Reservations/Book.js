@@ -1,15 +1,29 @@
-import React, { useContext, useState, useEffect } from "react";
 
-import Link from "next/link";
-import { getDataUser, signOutUser } from '../../firebaseConfig'
-import Signup from '../Account/Signup';
 import { HotelContext } from "../Context/hotelContext";
 import { UserContext } from "../Context/userContext";
+import { useDocument } from "react-firebase-hooks/firestore";
+import { doc, getDoc, collection } from "firebase/firestore";
+import db from "../../firebaseConfig";
+import React, { useContext, useState, useEffect } from "react";
 
-function Book () {
-    const { currentHotel, setCurrentHotel } = useContext(HotelContext);
-    const { currentUser } = useContext(UserContext);
-    return (
+import { useRouter } from "next/router";
+import { getHotel } from "../../firebaseConfig";
+
+function Book(props) {
+  const { currentHotel, setCurrentHotel } = useContext(HotelContext);
+  const { currentUser } = useContext(UserContext);
+
+
+  useEffect(async () => {
+    const hotel = await getHotel(props.condition);
+    setCurrentHotel(hotel);
+  }, []);
+  console.log(currentHotel);
+  return (
+    <>
+      {!currentHotel ? (
+        <></>
+      ) : (
         <div className='flex flex-col h-[auto] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-10'>
             <span className='text-center text-white pt-5 pb-8 pl-16 font-bold tracking-widest text-[30px]'>BOOK</span>
             <hr></hr>
@@ -35,7 +49,7 @@ function Book () {
                 </div>
                 <div className="flex flex-col justify-left align-center">
                     <span className='text-white pl-20 font-bold tracking-widest text-[16px] p-4'>Booking information:</span>
-                    <span className='text-white pl-20 tracking-widest text-[16px]'>Name: {currentUser.firstname} {currentUser.lastname} </span>
+                    <span className='text-white pl-20 tracking-widest text-[16px]'>Name: </span>
                     <span className='text-white pl-20 tracking-widest text-[16px] '>Check-in: [Check-in date]</span>
                     <span className='text-white pl-20 tracking-widest text-[16px] '>Check-out: [Check-out date]</span>
                     <span className='text-white pl-20 tracking-widest text-[16px] '>Days Staying: [Count days]</span>
@@ -50,8 +64,9 @@ function Book () {
             </div>
 
         </div>
-        
-    )
+      )}
+    </>
+  );
 }
 
-export default Book
+export default Book;
