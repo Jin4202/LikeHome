@@ -145,7 +145,7 @@ const store_hotel_data = async (fb_dst_collection, key, fb_hotel_collection) => 
 //const targetCities = ['Adirondacks', 'Manhattan', 'Black Hills', 'Chicago', 'Rocks National Lakeshore'];
 const city = 'Adirondacks';
 const input_country = 'USA';
-const key = '26d8e4a878msh13756b5655fba44p187bf8jsn6522b25dc22a';
+const key = '';
 const fb_dst_collection = 'destinations';
 const fb_hotel_collection = 'hotelByDestination';
 /*
