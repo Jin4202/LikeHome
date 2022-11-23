@@ -46,7 +46,7 @@ function PropertyCard(props) {
               onClick={handleClick}
             >
               {" "}
-              Sign in?{" "}
+              Sign-in to Book{" "}
             </button>
           )}
         </div>
