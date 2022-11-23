@@ -19,6 +19,9 @@ import {
   doc,
   setDoc,
   getDocs,
+  updateDoc,
+  deleteDoc,
+  deleteField
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -112,8 +115,8 @@ export const getDataUser = async (userAuth) => {
 export const updateFirstname = async (userAuth, newFirstname) => {
   try {
     const userDocRef = doc(db, "users", userAuth.uid);
-    updateDoc(userDocRef,{
-      firstname:newFirstname
+    await updateDoc(userDocRef, {
+      firstname: newFirstname
     })
   } catch (error) {
     console.log(error);
@@ -123,8 +126,8 @@ export const updateFirstname = async (userAuth, newFirstname) => {
 export const updateLastname = async (userAuth, newLastname) => {
   try {
     const userDocRef = doc(db, "users", userAuth.uid);
-    updateDoc(userDocRef,{
-      lastname:newLastname
+    await updateDoc(userDocRef, {
+      lastname: newLastname
     })
   } catch (error) {
     console.log(error);
@@ -134,13 +137,29 @@ export const updateLastname = async (userAuth, newLastname) => {
 export const updatePhone = async (userAuth, newPhone) => {
   try {
     const userDocRef = doc(db, "users", userAuth.uid);
-    updateDoc(userDocRef,{
-      phone:newPhone
+    await updateDoc(userDocRef, {
+      phone: newPhone
     })
   } catch (error) {
     console.log(error);
   }
 };
+
+export const deleteAccount = async (userAuth) => {
+  try {
+    const userDocRef = doc(db, "users", userAuth.uid);
+    updateDoc(userDocRef, {
+      firstname: deleteField(),
+      lastname: deleteField(),
+      phone: deleteField(),
+      email: deleteField(),
+      pwd: deleteField()
+    })
+    deleteDoc(userDocRef);
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 
 // useEffect(() => {
