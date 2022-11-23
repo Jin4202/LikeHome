@@ -11,7 +11,7 @@ function Book(props) {
   const [checkIn,setCheckIn] = useState("");
   const [checkOut,setCheckOut] = useState("");
   const [totalDays, setTotalDays] = useState("0")
-  const [totalPrice, setTotalPrice] = useState("0");
+  const [totalPrice, setTotalPrice] = useState();
   let temp = currentHotel.price.split("$");
   const price = Math.floor(temp[1].split(",").join("") / 30);
 
@@ -30,11 +30,13 @@ function Book(props) {
 
       if(checkIn < checkOut){
         setTotalDays(timeDifference / (1000*3600 * 24));
-        setTotalPrice(price * totalDays);
+        let tempDays = timeDifference / (1000*3600 * 24);
+        setTotalPrice(price * tempDays);
       }
       else if (checkIn == checkOut){
         setTotalDays(timeDifference / (1000*3600 * 24) + 1);
-        setTotalPrice(price * totalDays);
+        let tempDays = timeDifference / (1000*3600 * 24) + 1;
+        setTotalPrice(price * tempDays);
       }
       else{
         alert("Select a later Check-Out date!");
@@ -44,6 +46,7 @@ function Book(props) {
       alert("Please select dates!");
     }
   }
+  
   
 
   useEffect(async () => {
@@ -76,14 +79,14 @@ function Book(props) {
                 <div className="flex flex-col justify-left align-center">
                     <span className='text-white pl-20 font-bold tracking-widest text-[16px] p-4'>Booking information:</span>
                     <span className='text-white pl-20 tracking-widest text-[16px]'>Name: {currentUser.firstname} {currentUser.lastname} </span>
-                    <span className='text-white pl-20 tracking-widest text-[16px] '>Check-in: <input type='date' onChange={e=> setCheckIn(e.target.value)} className='text-center text-black' id='check-in' size='12'></input></span>
-                    <span className='text-white pl-20 tracking-widest text-[16px] '>Check-out: <input type='date' onChange={e=>setCheckOut(e.target.value)} className='text-center text-black' id='check-out' size='12'></input>
-                      <button type='button' className="button11 tracking-widest" onClick={() => addDays()} > Check Price </button>
-                    </span>
+                    <span className='text-white pl-20 tracking-widest text-[16px] '>Check-in: <input type='date' onChange={e=> setCheckIn(e.target.value)} className='text-center text-black' id='check-in' size='12'></input> Check-out: <input type='date' onChange={e=>setCheckOut(e.target.value)} className='text-center text-black' id='check-out' size='12'></input></span>
                     <span className='text-white pl-20 tracking-widest text-[16px] '>Days Staying: {totalDays}</span>
                     <span className='text-white pl-20 tracking-widest text-[16px] '>Room: {currentHotel.beds} beds </span>
                     <span className='text-white pl-20 tracking-widest text-[16px] '>Daily Price: $ {price}</span>
+                    <span className='text-white pt-5 pl-60 tracking-widest text-[16px] '><button type='button' className="button11 tracking-widest" onClick={() => addDays()} > Check Price </button>
+                    </span>
                     <span className=' text-white pt-20 pb-8 pl-20 font-bold tracking-widest text-[15px]'>Total Price: $ {totalPrice}</span>
+
                 </div>
             </div>           
 
