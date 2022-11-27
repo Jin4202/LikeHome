@@ -50,3 +50,28 @@ background: linear-gradient(0deg, rgba(199,197,231,1) 0%, rgba(206,253,255,0.304
     background-color: teal;
     border-bottom-right-radius: 45%;
 }
+.button10 {
+  background-color: #147c1a;
+  border: none;
+  color: white;
+  padding: 10px 27px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.button11 {
+    background-color: #568a85;
+    border: none;
+    color: white;
+    width: 120px;
+    padding: 3px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+  }

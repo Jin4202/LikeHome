@@ -1,21 +1,29 @@
-import React, { useContext, useState } from 'react'
-import Link from "next/link";
+import React, { useContext, useState } from 'react';
+import Link from 'next/link';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined';
 import ContactPhoneOutlinedIcon from "@mui/icons-material/ContactPhoneOutlined";
 import { getDataUser, signInAuthUserWithEmailAndPassword, signOutUser, updateFirstname, updateLastname,
-        updatePhone } from '../../firebaseConfig'
-import { UserContext } from '../Context/userContext'
+        updatePhone, deleteAccount } from '../../firebaseConfig';
+import { UserContext } from '../Context/userContext';
 
 function Profile() {
     const { currentUser, setCurrentUser } = useContext(UserContext);
     const [ firstname, setFirstname ] = useState("");
     const [ lastname, setLastname ] = useState("");
     const [ phone, setPhone ] = useState("");
-    const [ editFirstname, setEditFirstname ] = useState("");
-    const [ editLastname, setEditLastname ] = useState("");
-    const [ editPhone, setEditPhone ] = useState("");
+    const [ editFirstname, setEditFirstname ] = useState(false);
+    const [ editLastname, setEditLastname ] = useState(false);
+    const [ editPhone, setEditPhone ] = useState(false);
     
+    var pwdLen = currentUser.pwd.length;
+    var pwdHidden = currentUser.pwd.charAt(0);
+    for (var i = 1; i < pwdLen; i++) {
+        pwdHidden += '*';
+    }
+
+    var welcome = "Welcome back, " + currentUser.firstname + "!";
+    var welcomeDefault = "Welcome back!";
 
     const signOutHandler = async () => {
         await signOutUser();
@@ -27,7 +35,7 @@ function Profile() {
             const {user} = await signInAuthUserWithEmailAndPassword(currentUser.email, currentUser.pwd);
             if (editFirstname) {
                 if (currentUser.firstname != firstname && firstname != "") {
-                    updateFirstname(user, firstname);
+                    await updateFirstname(user, firstname);
                 }
                 const data = await getDataUser(user);
                 setCurrentUser(data);
@@ -43,7 +51,7 @@ function Profile() {
             const {user} = await signInAuthUserWithEmailAndPassword(currentUser.email, currentUser.pwd);
             if (editLastname) {
                 if (currentUser.lastname != lastname && lastname != "") {
-                    updateLastname(user, lastname);
+                    await updateLastname(user, lastname);
                 }
                 const data = await getDataUser(user);
                 setCurrentUser(data);
@@ -59,7 +67,7 @@ function Profile() {
             const {user} = await signInAuthUserWithEmailAndPassword(currentUser.email, currentUser.pwd);
             if (editPhone) {
                 if (currentUser.phone != phone && phone != "") {
-                    updatePhone(user, phone);
+                    await updatePhone(user, phone);
                 }
                 const data = await getDataUser(user);
                 setCurrentUser(data);
@@ -70,12 +78,24 @@ function Profile() {
         }
     }
 
+    const deleteHandler = async() => {
+        try {
+            const {user} = await signInAuthUserWithEmailAndPassword(currentUser.email, currentUser.pwd);
+            await deleteAccount(user);
+            setCurrentUser(null);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className='flex flex-col h-[700px] bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 p-10'>
-            <span className='text-white pt-5 pb-8 pl-16 font-bold tracking-widest text-[30px]'>Welcome back, {currentUser.firstname}!</span>
+            <span className='text-white pt-5 pb-8 pl-16 font-bold tracking-widest text-[30px]'>
+                {currentUser.firstname ? (welcome) : (welcomeDefault)}
+            </span>
             <hr></hr>
             <div className="flex flex-row justify-center align-center p-4 text-[20px]">
-                <button className="flex flex-col justify-center align-center text-white px-4 text-center">
+                <button className="flex flex-col justify-center align-center text-white px-4 underline text-center">
                     <p className="hover:scale-125">Profile</p>
                 </button>
                 <button className="flex flex-col justify-center align-center text-white px-4 text-center">
@@ -170,8 +190,19 @@ function Profile() {
                     </div>
                     <div className='flex flex-row'>
                         <span className='text-white pl-20 tracking-widest text-[16px] p-4'>
-                            {currentUser.pwd}</span>
+                            {pwdHidden}</span>
                     </div>
+                </div>
+            </div>
+            <div className='flex flex-row justify-between pt-28'>
+                <div></div>
+                <div>
+                    <button className='flex flex-col justify-center align-center text-white text-center hover:scale-125'
+                        onClick={deleteHandler}>
+                        <Link href="/">
+                            Delete account
+                        </Link>
+                    </button>
                 </div>
             </div>
         </div>

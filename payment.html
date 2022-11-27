@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+	<html class ="form-center">
+		<head>
+			<style>
+				.row 
+				{
+  					display: -ms-flexbox; 
+  					display: flex;
+  					-ms-flex-wrap: wrap; 
+  					flex-wrap: wrap;
+  					margin: 0 -16px;
+				}
+				@media (max-width: 800px) 
+				{
+  					.row 
+  					{
+    					flex-direction: column-reverse;
+ 					 }
+  					.col-25 
+  					{
+    					margin-bottom: 20px;
+ 					}
+				}
+				.container 
+				{
+  					background-color: white;
+  					padding: 5px 20px 15px 20px;
+  					border: 1px solid black;
+  					border-radius: 3px;
+  				}
+  				body 
+				{
+  					font-family: menlo;
+  					font-size: 18px;
+  					padding: 10px;
+				}
+				.col-75 
+				{
+  					padding: 0 16px;
+				}
+				.col-50 
+				{
+  					-ms-flex: 50%; 
+ 					flex: 50%;
+				}
+				.form-center 
+				{
+  					display:flex;
+  					justify-content: center;
+				}
+				img.payCard 
+				{
+  					height: 30%;
+  					width: 40%;
+				}
+				img.line
+				{
+					height: 30%;
+  					width: 40%;
+				}
+				.mainHeader
+				{
+					font-size: 60px;
+				}
+			</style>
+		</head>
+		<script type="text/javascript">
+								
+								
+			function confirmFunction() 
+			{
+  				if (confirm("Do you want to Confirm your Payment?")) 
+  				{
+    					//window.open('confirmed.html');
+    					validateForm();
+  				} else 
+  				{
+   					alert("Payment Canceled");
+ 				}	 	
+			}
+			function validateForm() 
+			{
+				/*
+				var  = document.forms["form"][""].value;
+						a = cardname
+						b = cardNunmber
+						c = cvv
+						d = expMonth
+						e = fullName
+						f = email
+						g = address
+						h = city
+						i = zip
+						j = state
+						
+						
+				else if( == "" ||  == null)
+  				{
+  					
+  				}
+				*/
+				var a = document.forms["form"]["cardname"].value;
+				var b = document.forms["form"]["cardNumber"].value;
+				var c = document.forms["form"]["cvv"].value;
+				var d = document.forms["form"]["expMonth"].value;
+				var e = document.forms["form"]["fullName"].value;
+				var f = document.forms["form"]["email"].value;
+				var g = document.forms["form"]["address"].value;
+				var h = document.forms["form"]["city"].value;
+				var i = document.forms["form"]["zip"].value;
+				var j = document.forms["form"]["state"].value;
+				
+  				if (a == "" || a == null) 
+  				{
+    				alert("Name on Card must be filled out.");
+   			 		return false;
+  				}
+  				else
+  				if(b == "" || b == null)
+  				{
+  					Alert("Card Number must be filled out.")
+  					return false;
+  				}
+  				else
+  				if(c == "" || c == null)
+  				{
+  					Alert("CVV Number must be filled out.")
+  					return false;
+  				}
+  				else
+  				if(d  == "" || d == null)
+  				{
+  					Alert("Exp Month must be filled out.")
+  					return false;
+  				}
+  				else
+  				if(e  == "" || e == null)
+  				{
+  					Alert("Full Name must be filled out.")
+  					return false;
+  				}
+  				else
+  				if(f  == "" || f == null)
+  				{
+  					Alert("Email must be filled out.")
+  					return false;
+  				}
+  				else
+  				if( g == "" || g == null)
+  				{
+  					Alert("Street Address must be filled out.")
+  					return false;
+  				}
+  				else
+  				if(h == "" || h == null)
+  				{
+  					Alert("City must be filled out.")
+  					return false;
+  				}
+  				else
+  				if(i  == "" || i == null)
+  				{
+  					Alert("Zip Code must be filled out.")
+  					return false;
+  				}
+  				else
+  			 	if(j  == "" || j == null)
+  				{
+  					Alert("State must be filled out.")
+  					return false;
+  				}
+  				else
+  				if (a == "" || a == null && b == "" || b == null)
+  				{
+  					Alert("Form must be filled out.");
+  					return false;
+  				}
+  				else
+  				{
+  					window.open('confirmed.html');
+  					window.close();
+  					//location.href = "confirm.html";
+  					//window.location('confirmed.html');
+  				}	
+			}
+			/*			
+  									 
+ 			function dataValidation()
+ 			{
+ 									 	
+ 			}*/
+		</script>	
+		<body style="background-color:violet;" class ="form-center" >
+		<!-- <p><h2>Checkout/Payment Form</h2></p><br>-->
+			<div class="row">
+				<div class="col-75">
+					<div class="container">
+						<h2>Checkout/Payment Form</h2>
+						<hr>
+						<form name = "form" action="/action_page.php"  onsubmit="validateForm()" method="post" required>
+							<div class="row">
+								<div class="col-50">
+									<p><i style="color:red;">Please fill out required fields*</i></p>
+									<h3 class ="form-center">Payment</h3>
+									<p> </p>
+									<p>Payment Method</p>
+									<p><img class="payCard" src="https://www.sketchappsources.com/resources/source-image/credit-card-logos.png" ></p>
+									<p> </p>
+            							<label for="cname">Name on Card<i style="color:red;">*</i></label>
+            							<br>
+           		 						<input type="text" id="a" name="cardname" placeholder="Peter Benjamin Parker">
+            							<br>
+           								<label for="ccnum">Credit Card Number<i style="color:red;">*</i></label>
+           								<br>
+           							 	<input type="text" id="b" name="cardNumber" placeholder="1111-2222-3333-4444">
+            							<br>
+           	 							<label for="cvv">CVV<i style="color:red;">*</i></label>
+           	 							<br>
+                						<input type="text" id="c" name="cvv" placeholder="352">
+            							<br>
+           	 							<label for="expmonth">Exp Month<i style="color:red;">*</i></label>
+           	 							<br>
+            							<input type="text" id="d" name="expMonth" placeholder="September">
+            							<br>
+            							<hr>
+									<h3 class ="form-center">Billing Address</h3>
+										<label for="fname"><i class="fa fa-user"></i>Full Name<i style="color:red;">*</i></label>
+										<br>
+            							<input type="text" id="e" name="fullName" placeholder="Peter B. Parker">
+            							<br>
+            							<label for="email"><i class="fa fa-envelope"></i>Email<i style="color:red;">*</i></label>
+            							<br>
+            							<input type="text" id="f" name="email" placeholder="peterParker@example.com">
+            							<br>
+            							<label for="adr"><i class="fa fa-address-card-o"></i>Address<i style="color:red;">*</i></label>
+            							<br>
+           								<input type="text" id="g" name="address" placeholder="24 Willie Mays Plaza">
+            							<br>
+            							<label for="city"><i class="fa fa-institution"></i>City<i style="color:red;">*</i></label>
+            						 	<br>
+            							<input type="text" id="h" name="city" placeholder="San Franscico">
+            							<br>
+            							<label for="zip">Zip<i style="color:red;">*</i></label>
+            							<br>
+                						<input type="text" id="i" name="zip" placeholder="10001">
+                						<br>
+                						<label for="state">State<i style="color:red;">*</i></label>
+                						<br>
+                						<input type="text" id="j" name="state" placeholder="CA">
+                						<br>
+                						<label for="state">Phone Number<i>(Optional)</i></label>
+                						<br>
+                						<input type="text" id="j" name="phone" placeholder="(111) 555-8899">
+                						<br>
+                						<hr>
+                						<p>Subtotal<br>Tax*</p>
+                						<hr>
+                						<p>Order Total</p>
+								</div>
+							</div>
+								<p class ="form-center">
+									<button type="button" onclick="confirmFunction()">Confirm and Pay</button>
+								</p>
+						</form>
+					</div>
+				</div>
+			</div>
+		</body>
+	</html>
